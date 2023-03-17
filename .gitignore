@@ -33,3 +33,4 @@
 
 # Vim swap file
 *.swp
+build/
