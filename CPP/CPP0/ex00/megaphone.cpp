@@ -15,7 +15,7 @@ int main (int ac, char **av)
 	}
 	else
 		for (int i = 1; i < ac; i++) {
-			for (int i2 = 0; i2 < strlen(av[i]); i2++) {
+			for (int i2 = 0; i2 < (int)strlen(av[i]); i2++) {
 				ch = std::toupper((unsigned char)av[i][i2]);
 				std::cout << ch;
 			}
