@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.5)
 
 project(Megaphone DESCRIPTION "Very nice project" LANGUAGES CXX)
-
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if(UNIX)
 	add_compile_options(
 	-Wextra
