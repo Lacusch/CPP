@@ -4,7 +4,7 @@
 #include <string>
 #include <sys/_types/_size_t.h>
 #include "PhoneBook.class.hpp"
-
+#include <sstream> // this will allow you to use stringstream in your program
 Phone_Book::Phone_Book () {
 	this->_oldest = 0;
 	this->_number = 0;
@@ -37,7 +37,8 @@ void Phone_Book::add_contact() {
 }
 
 void Phone_Book::list_contact() {
-
+	std::string index;
+	int i_number;
 	if (this->_number == 0)
 	{
 		std::cout << "Empty phonebook, add an entry and try again" << std::endl;
@@ -50,7 +51,18 @@ void Phone_Book::list_contact() {
 		this->list_elem(this->_cottacts[i], i + 1);
 	}
 	std::cout << "|----------|----------|----------|----------|" << std::endl;
-}
+	std::cout << "Chose an index to print between 1 and " << this->_number << std::endl;
+	std::stringstream ss; 
+	std::cin >> index;
+	ss << index;
+   	ss >> i_number;
+	if (i_number < 1 || i_number > 8 || i_number > _number) {
+		std::cout << "Invalid number, try again" << std::endl;
+	}
+	else {
+		this->_cottacts[i_number -1].print_elements();
+	}
+   }
 
 void Phone_Book::list_elem(Contact i, int index) {
 	std::string print;
