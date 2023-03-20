@@ -8,7 +8,7 @@ public:
 	Contact ();
 	~Contact ();
 	void	get_info();
-	void	print_elements();
+
 	std::string *get_element(int i);
 private:
 	std::string	_F_Name;
