@@ -1,10 +1,9 @@
 #include <ios>
 #include <iostream>
-#include <ostream>
 #include <string>
-#include <sys/_types/_size_t.h>
-#include "PhoneBook.class.hpp"
 #include <sstream> // this will allow you to use stringstream in your program
+#include "PhoneBook.hpp"
+
 Phone_Book::Phone_Book () {
 	this->_oldest = 0;
 	this->_number = 0;

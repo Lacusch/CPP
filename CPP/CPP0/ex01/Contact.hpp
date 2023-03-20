@@ -1,4 +1,5 @@
-
+#ifndef CONTACT_HPP
+#define CONTACT_HPP
 #include <iostream>
 #include <string>
 #include <iomanip>
@@ -17,3 +18,4 @@ private:
 	std::string	_Phone;
 	std::string _dark_secret;
 };
+#endif

@@ -1,8 +1,8 @@
 NAME = My_Awesome_PhoneBook
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp PhoneBook.class.cpp Contact.class.cpp
+SRC = main.cpp PhoneBook.cpp Contact.cpp
 CXX = c++
-HDR = Contact.class.hpp PhoneBook.class.hpp
+HDR = Contact.hpp PhoneBook.hpp
 
 OBJ = $(SRC:%.cpp=%.o)
 all: $(NAME)
@@ -17,4 +17,4 @@ re: fclean all
 
 run: all
 	@./$(NAME)
-
+.PHONY: all clean fclean re run

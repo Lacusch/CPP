@@ -1,6 +1,8 @@
-#include "string"
-#include "Contact.class.hpp"
+#ifndef PHONE_BOOK_HPP
+#define PHONE_BOOK_HPP
+
 #include <string>
+#include "Contact.hpp"
 
 class Phone_Book {
 public:
@@ -16,3 +18,4 @@ private:
 	int		_oldest;
 	int		_number;
 };
+#endif
