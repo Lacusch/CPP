@@ -13,15 +13,9 @@ int	main(void ) {
 	while (1) {
 		std::getline(std::cin, line);
 		if (line == "ADD")
-		{
-			std::cout << "Stuff to add here" << std::endl;
 			phonebook.add_contact();
-		}
 		else if (line == "SEARCH")
-		{
 			phonebook.list_contact();
-			std::cout << "SEARCH" << std::endl;
-		}
 		else if (line == "EXIT")
 			break;
 		else

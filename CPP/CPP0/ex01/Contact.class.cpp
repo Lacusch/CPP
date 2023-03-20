@@ -28,3 +28,11 @@ std::string *Contact::get_element(int i){
 	else
 		return &this->_Nickname;
 }
+
+void Contact::print_elements() {
+	std::cout << "First Name: " << this->_F_Name << std::endl;
+	std::cout << "Last Name: " << this->_L_Name << std::endl;
+	std::cout << "Nickname : " << this->_Nickname << std::endl;
+	std::cout << "Phone : " << this->_Phone << std::endl;
+	std::cout << "Deepset darkest secret: " << this->_dark_secret << std::endl;
+}
