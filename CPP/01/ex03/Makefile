@@ -1,9 +1,8 @@
-NAME = zombieHorde
+NAME = BRUTALITY
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp Zombie.cpp zombieHorde.cpp
+SRC = main.cpp Weapon.cpp HumanA.cpp HumanB.cpp 
 CXX = c++
-HDR = Zombie.hpp
-
+HDR = Weapon.hpp HumanA.hpp HumanA.hpp
 OBJ = $(SRC:%.cpp=%.o)
 
 all: $(NAME)
@@ -18,4 +17,5 @@ re: fclean all
 
 run: all
 	@./$(NAME)
+
 .PHONY: all clean fclean re run

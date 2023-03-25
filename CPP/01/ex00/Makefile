@@ -14,7 +14,6 @@ clean:
 	@rm -f *.o
 fclean: clean
 	@rm -f $(NAME)
-	@rm -rf logs
 re: fclean all
 
 run: all
