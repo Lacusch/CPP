@@ -1,5 +1,4 @@
 #include "Harl.hpp"
-#include <sys/_types/_size_t.h>
 
 Harl::Harl() {
   _funcTable.f[0] = &Harl::_debug;
