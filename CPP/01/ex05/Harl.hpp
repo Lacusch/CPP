@@ -1,6 +1,10 @@
+#ifndef HARL_HPP
+#define HARL_HPP
 #include <iostream>
 #include <string>
+#include <sys/_types/_size_t.h>
 #include <system_error>
+
 class Harl {
 public:
   Harl();
@@ -18,3 +22,4 @@ private:
   } Funtions;
   Funtions funcTable;
 };
+#endif

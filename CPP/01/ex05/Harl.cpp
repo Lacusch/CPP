@@ -1,5 +1,4 @@
 #include "Harl.hpp"
-#include <sys/_types/_size_t.h>
 
 Harl::Harl() {
   funcTable.f[0] = &Harl::_debug;
@@ -17,7 +16,7 @@ Harl::~Harl(){};
 void Harl::_debug(void) const {
   std::cout << "I love having extra bacon for my "
                "7XL-double-cheese-triple-pickle-special-ketchup "
-               "burger.I really do !"
+               "burger. I really do!"
             << std::endl;
 }
 
@@ -31,7 +30,7 @@ void Harl::_info(void) const {
 void Harl::_warning(void) const {
   std::cout
       << "I think I deserve to have some extra bacon for free. I’ve been "
-         "coming foryears whereas you started working here since last month."
+         "coming for years where as you started working here since last month."
       << std::endl;
 }
 

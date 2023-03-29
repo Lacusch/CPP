@@ -10,8 +10,8 @@ void HumanB::attack() {
               << std::endl;
   else
     std::cout << _Name
-              << "has the daunting reallisation that attacking without a weapon"
-                 "is inpossible😭"
+              << " has the daunting reallisation that attacking without a weapon"
+                 " is inpossible😭"
               << std::endl;
   ;
 }
