@@ -1,4 +1,4 @@
-NAME = Fixed_Point
+NAME = Useful_Point
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = main.cpp Fixed.cpp
 CXX = c++
