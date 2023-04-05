@@ -105,7 +105,7 @@ Fixed &Fixed::operator++(void) {
 
 Fixed Fixed::operator++(int) {
   Fixed nFix = *this;
-  ++(nFix._fixed);
+  ++(this->_fixed);
   return nFix;
 }
 
@@ -121,7 +121,7 @@ Fixed &Fixed::min(Fixed &c1, Fixed &c2) {
 }
 Fixed Fixed::operator--(int) {
   Fixed nFix = *this;
-  --(nFix._fixed);
+  --(this)->_fixed;
   return nFix;
 }
 const Fixed &Fixed::min(Fixed const &c1, Fixed const &c2) {

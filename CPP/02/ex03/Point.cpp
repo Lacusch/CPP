@@ -15,7 +15,6 @@ Point::Point(Point &cpy) : _x(cpy.getX()), _y(cpy.getY()) {
 
 Point &Point::operator=(const Point &a) {
   // std::cout << "Copy assignment operator called" << std::endl;
-  // to fix
   (void)a;
   return *this;
 }
