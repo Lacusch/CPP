@@ -1,8 +1,8 @@
-NAME = Brains
+NAME = Animals_with_Brains
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp
+SRC = main.cpp Animal.cpp Cat.cpp Dog.cpp Brain.cpp
 CXX = c++
-HDR = Animal.hpp Cat.hpp Dog.hpp
+HDR = Animal.hpp Cat.hpp Dog.hpp Brain.hpp
 OBJ = $(SRC:%.cpp=%.o)
 
 all: $(NAME)

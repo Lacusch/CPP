@@ -33,4 +33,34 @@
 
 # Vim swap file
 *.swp
+# Cmake build folder
 build/
+# All the named executables:
+
+#CPP00
+megaphone
+My_Awesome_PhoneBook
+My_Awesome_Banking_System
+#CPP01
+Zombies
+zombieHorde
+BRAIN
+BRUTALITY
+mysed
+Harl
+harlFilter
+#CPP02
+Fixed_Point
+Useful_Point
+Overloading_Madeness
+bps
+#CPP03
+ClapTrap
+ScavTrap
+FragTrap
+DiamondTrap
+#CPP04
+Animals
+Animals_with_Brains
+Abstract_Animals
+Interface

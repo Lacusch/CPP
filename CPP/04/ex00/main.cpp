@@ -1,6 +1,7 @@
 #include "Cat.hpp"
 #include "Dog.hpp"
 #include "WrongCat.hpp"
+#include <cstdlib>
 
 int main(int ac, char **av) {
   int test = 0;
@@ -21,15 +22,21 @@ int main(int ac, char **av) {
     const Animal *j = new Dog();
     const Animal *i = new Cat();
     // new Dog();
-    std::cout << j->getType() << " " << std::endl;
-    std::cout << i->getType() << " " << std::endl;
+    std::cout << "The type of this animal is: " << j->getType() << std::endl;
+    std::cout << "The type of this animal is: " << i->getType() << std::endl;
+    std::cout << "The type of this animal is: " << meta->getType() << std::endl;
+
+    std::cout << "Sound of Cat:" << std::endl;
     i->makeSound(); // will output the cat sound!
+    std::cout << "Sound of Dog:" << std::endl;
     j->makeSound();
+    std::cout << "Sound of Animal:" << std::endl;
     meta->makeSound();
     delete j;
     delete meta;
     delete i;
-    // system("leaks Animals");
+    if (test < 4)
+      system("leaks Animals");
   }
   if (test == 2 || test > 3) {
     if (test > 3)
@@ -38,14 +45,20 @@ int main(int ac, char **av) {
     const Animal *meta = new Animal();
     const Animal *j = new Dog();
     const WrongAnimal *i = new WrongCat();
-    std::cout << j->getType() << " " << std::endl;
-    std::cout << i->getType() << " " << std::endl;
-    i->makeSound(); // will output the cat sound!
+    std::cout << "The type of this animal is: " << j->getType() << std::endl;
+    std::cout << "The type of this animal is: " << i->getType() << std::endl;
+    std::cout << "The type of this animal is: " << meta->getType() << std::endl;
+    std::cout << "Sound of Dog:" << std::endl;
     j->makeSound();
+    std::cout << "Sound of WrongCat:" << std::endl;
+    i->makeSound(); // will NOT output the cat sound!
+    std::cout << "Sound of Animal:" << std::endl;
     meta->makeSound();
     delete j;
     delete meta;
     delete i;
+    if (test < 4)
+      system("leaks Animals");
   }
   if (test == 3 || test > 3) {
     if (test > 3)
@@ -63,6 +76,10 @@ int main(int ac, char **av) {
     std::cout << std::endl;
     delete j;
     delete i;
+    if (test < 4)
+      system("leaks Animals");
   }
+  if (test > 3)
+    system("leaks Animals");
   return 0;
 }
