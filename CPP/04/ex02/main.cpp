@@ -88,13 +88,12 @@ int main(int ac, char **av) {
   /*
   Animal t;
   This doesn't compile because animal is an abstract class now.
-*/
+  So this couldn't work:
+ int main(void) {
+   Animal t;
+   return 0;
+ }
+ */
 
   return 0;
 }
-
-
-// int main(void) {
-//   Animal t;
-//   return 0;
-// }
