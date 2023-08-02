@@ -4,7 +4,12 @@
 class Bureaucrat {
   std::string const name;
   int grade;
-  class grade_to_low : std::exception {
-    const char *what() const throw() { return "exception"; }
+  class GradeTooLowException : public std::exception {
+  public:
+    const char *what() const throw();
+  };
+  class GradeTooHighException : public std::exception {
+  public:
+    const char *what() const throw();
   };
 };
