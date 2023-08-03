@@ -1,4 +1,5 @@
 #include "Bureacrat.hpp"
+#include <iostream>
 #include <ostream>
 #include <string>
 // Orthodox Canonical Form
@@ -7,10 +8,11 @@ Bureaucrat::Bureaucrat() {}
 
 Bureaucrat::Bureaucrat(int grade, std::string const &name) : _name(name) {
   if (grade > min_grade) {
-    Bureaucrat::GradeTooHighException();
+
+    throw Bureaucrat::GradeTooLowException();
   }
   if (grade < max_grade) {
-    Bureaucrat::GradeTooLowException();
+    throw Bureaucrat::GradeTooHighException();
   }
   _grade = grade;
 }
@@ -42,14 +44,14 @@ int Bureaucrat::getGrade() const { return _grade; }
 // setters
 
 void Bureaucrat::incrementGrade() {
-  if (_grade >= min_grade) {
+  if (_grade <= max_grade) {
     throw Bureaucrat::GradeTooHighException();
   }
   _grade--;
 }
 
 void Bureaucrat::decrementGrade() {
-  if (_grade >= max_grade) {
+  if (_grade >= min_grade) {
     throw Bureaucrat::GradeTooLowException();
   }
   _grade++;
