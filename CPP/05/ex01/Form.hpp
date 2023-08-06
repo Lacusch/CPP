@@ -6,16 +6,19 @@ class Form {
 public:
   // Orthodox Canonical form
 
-  Form(std::string const &name, bool is_signed, const int sign_grade,
-       const int exec_grade);
+  Form(std::string const &name, const int sign_grade, const int exec_grade);
   ~Form();
   Form(const Form &cpy);
   Form &operator=(const Form &rhs);
-
+  // static / calls variables
+  
+  const static int max_grade = 1;
+  const static int min_grade = 150;
   // getters
   std::string const &getName() const;
-  const int get_Sign_Grade() const;
-  const int get_Execute_Grade() const;
+  int get_Sign_Grade() const;
+  int get_Execute_Grade() const;
+  bool is_Signed() const;
   // setters
   void beSigned(Bureaucrat signer);
 

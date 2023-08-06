@@ -37,7 +37,7 @@ public:
 
   // Form stuff
 
-  void signForm(const Form &Form);
+  void signForm(Form &Form);
 
 private:
   std::string const _name;

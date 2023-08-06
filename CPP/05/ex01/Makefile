@@ -1,5 +1,5 @@
 NAME = I_love_Bureaucracy
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic-errors
 SRC = main.cpp Bureacrat.cpp Form.cpp
 CXX = c++
 HDR = Bureacrat.hpp Form.hpp

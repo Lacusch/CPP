@@ -1,4 +1,5 @@
 #include "Bureacrat.hpp"
+#include "Form.hpp"
 #include <exception>
 #include <iostream>
 
@@ -128,4 +129,6 @@ int main(int ac, char **av) {
     to_High_init();
     valid_Bureaucrat();
   }
+  Form test("test", 15, 17);
+  std::cout << test.getName();
 }
