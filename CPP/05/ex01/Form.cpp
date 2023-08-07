@@ -5,7 +5,8 @@
 #include <string>
 
 Form::Form(std::string const &name, const int sign_grade, const int exec_grade)
-    : name(name), is_signed(false), sign_grade(43), execute_grade(47) {
+    : name(name), is_signed(false), sign_grade(sign_grade),
+      execute_grade(exec_grade) {
   if (sign_grade < max_grade || exec_grade < max_grade) {
     throw Form::GradeTooHighException();
   }
@@ -13,9 +14,7 @@ Form::Form(std::string const &name, const int sign_grade, const int exec_grade)
     throw Form::GradeTooLowException();
   }
 }
-Form::Form()
-    : name("Annoying chud"), is_signed(false), sign_grade(43),
-      execute_grade(47) {}
+
 Form::~Form() {}
 
 Form::Form(const Form &a)
@@ -38,18 +37,16 @@ int Form::get_Execute_Grade() const { return this->execute_grade; }
 bool Form::is_Signed() const { return is_signed; }
 // Setters
 
-void Form::beSigned(Bureaucrat signer) {
-  if (signer.getGrade() < get_Sign_Grade()) {
-    throw Form::GradeTooHighException();
-  }
-  if (signer.getGrade() > get_Sign_Grade()) {
-    throw Form::GradeTooLowException();
+void Form::beSigned(Bureaucrat &signer) {
+  if (signer.getGrade() <= this->get_Sign_Grade()) {
     if (is_Signed() == true) {
       std::cout << "Form " << name << "already signed" << std::endl;
     } else {
       std::cout << signer.getName() << " signed " << getName() << std::endl;
       is_signed = true;
     }
+  } else {
+    throw Form::GradeTooLowException();
   }
 }
 
@@ -64,8 +61,8 @@ const char *Form::GradeTooHighException::what() const throw() {
 }
 
 std::ostream &operator<<(std::ostream &os, Form const &form) {
-  os << form.getName() << "has a required grade of " << form.get_Sign_Grade()
-     << "and is ";
+  os << form.getName() << " form has a required grade of " << form.get_Sign_Grade()
+     << " and is ";
   if (form.is_Signed()) {
     os << "is signed" << std::endl;
   } else {

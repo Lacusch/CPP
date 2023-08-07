@@ -20,7 +20,7 @@ public:
   int get_Execute_Grade() const;
   bool is_Signed() const;
   // setters
-  void beSigned(Bureaucrat signer);
+  void beSigned(Bureaucrat &signer);
 
   // exceptions
   class GradeTooLowException : public std::exception {
@@ -37,7 +37,6 @@ private:
   bool is_signed;
   const int sign_grade;
   const int execute_grade;
-  Form();
 };
 std::ostream &operator<<(std::ostream &os, Form const &form);
 

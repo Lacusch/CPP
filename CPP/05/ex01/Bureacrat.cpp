@@ -62,7 +62,8 @@ void Bureaucrat::decrementGrade() {
 // Insertion overload
 
 std::ostream &operator<<(std::ostream &os, Bureaucrat const &bureaucrat) {
-  os << bureaucrat.getName() << " " << bureaucrat.getGrade() << std::endl;
+  os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade()
+     << std::endl;
   return os;
 }
 
@@ -71,8 +72,8 @@ std::ostream &operator<<(std::ostream &os, Bureaucrat const &bureaucrat) {
 void Bureaucrat::signForm(Form &Form) {
   try {
     Form.beSigned(*this);
-  } catch (const std::exception e) {
-    std::cerr << "Bureaucrat " << getName() << " Tried to sign a form, but "
-              << e.what() << "happened" << std::endl;
+  } catch (const std::exception &e) {
+    std::cerr << "Bureaucrat " << getName() << " tried to sign a form, but "
+              << e.what() << " happened" << std::endl;
   }
 }

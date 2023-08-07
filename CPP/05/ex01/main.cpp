@@ -3,132 +3,103 @@
 #include <exception>
 #include <iostream>
 
-static void to_High_Increment() {
-  Bureaucrat b(120, "Thin_Lazy_lady");
+static void big_Form_sign() {
+  std::cout << "Form with high sign grade(0)" << std::endl;
   try {
-    while (1) {
-      std::cout << b << std::endl;
-      b.incrementGrade();
-    }
-  } catch (const std::exception &e) {
-    std::cerr << b << std::endl << e.what() << std::endl;
-    std::cout << "to_High_Increment test" << std::endl;
-  }
-}
-
-static void to_Low_Decrement() {
-  Bureaucrat b(32, "Fat_Lazy_lady");
-  try {
-    while (1) {
-      std::cout << b << std::endl;
-      b.decrementGrade();
-    }
-  } catch (const std::exception &e) {
-    std::cerr << b << std::endl << e.what() << std::endl;
-    std::cout << "to_Low_Decrement test" << std::endl;
-  }
-}
-
-static void to_Low_init() {
-  try {
-    std::cout << "Try to init Bureaucrat with grade 160 (to low)" << std::endl;
-    Bureaucrat b(160, "Chunky");
+    Form test("name", 0, 60);
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
-    std::cout << "to_Low_init test" << std::endl;
   }
 }
 
-static void to_High_init() {
+static void small_Form_sign() {
+  std::cout << "Form with low sign grade(160)" << std::endl;
   try {
-    std::cout << "Try to init Bureaucrat with grade 0 (to high)" << std::endl;
-    Bureaucrat b(0, "Thin");
+    Form test("name", 160, 60);
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
-    std::cout << "to_High_init test" << std::endl;
   }
 }
 
-static void valid_Bureaucrat() {
+static void big_Form_exec() {
+  std::cout << "Form with high exec grade(0)" << std::endl;
   try {
-    Bureaucrat b(1, "Pipedream");
-    std::cout << "Testing " << b << std::endl;
-    for (int i = 1; i < 150; i++) {
-      std::cout << "Testing " << b << std::endl;
-      b.decrementGrade();
-    }
+    Form test("name", 60, 0);
   } catch (const std::exception &e) {
     std::cerr << e.what() << std::endl;
-    std::cout << "valid_Bureaucrat test" << std::endl;
   }
-  std::cout << "Finished without exception 🎉" << std::endl;
 }
+
+static void small_Form_exec() {
+  std::cout << "Form with low exec grade(160)" << std::endl;
+  try {
+    Form test("name", 60, 160);
+  } catch (const std::exception &e) {
+    std::cerr << e.what() << std::endl;
+  }
+}
+
+static void be_signed() {
+  Bureaucrat b(43, "Intern");
+  Bureaucrat b2(11, "Executive Intern");
+  Form f("Transfer request", 11, 11);
+  std::cout << b << b2 << f << std::endl;
+  try {
+    std::cout << "Bureaucrat with grade 43 trying ot sign a form with grade 11"
+              << std::endl;
+    b.signForm(f);
+  } catch (const std::exception &e) {
+    std::cerr << e.what() << std::endl;
+  }
+  try {
+    std::cout << "Bureaucrat with grade 11 trying ot sign a form with grade 11"
+              << std::endl;
+    b2.signForm(f);
+  } catch (const std::exception &e) {
+    std::cerr << e.what() << std::endl;
+  }
+}
+
 int main(int ac, char **av) {
-  if (ac == 1) {
-    std::cerr << "Usage:" << std::endl
-              << "Type the number for corresponding to the test(s) you want to "
+  if (ac == 1 || ac > 2) {
+    if (ac > 2) {
+      std::cerr << "Too many arguments" << std::endl;
+    } else {
+      std::cerr << "Usage:" << std::endl;
+    }
+    std::cerr << "Type the number for corresponding to the test(s) you want to "
                  "run"
               << std::endl
-              << "1. to_High_Increment" << std::endl
-              << "2. to_Low_Increment" << std::endl
-              << "3. to_Low_init" << std::endl
-              << "4. to_High_init" << std::endl
-              << "5. Valid Bureaucrat" << std::endl
-              << "6. Run all tests🧪" << std::endl;
-    return 1;
-  }
-  if (ac > 2) {
-    std::cerr << "Too many arguments" << std::endl
-              << "Usage:" << std::endl
-              << "Type the number for corresponding to the test(s) you want to "
-                 "run"
-              << std::endl
-              << "1. to_High_Increment" << std::endl
-              << "2. to_Low_Increment" << std::endl
-              << "3. to_Low_init" << std::endl
-              << "4. to_High_init" << std::endl
-              << "5. Valid Bureaucrat" << std::endl
+              << "1. big_Form_sign" << std::endl
+              << "2. small_Form_sign" << std::endl
+              << "3. big_Form_exec" << std::endl
+              << "4. small_Form_exec" << std::endl
+              << "5. be_signed" << std::endl
               << "6. Run all tests🧪" << std::endl;
     return 1;
   }
   int arg = atoi(av[1]);
-  if (arg < 1 || arg > 6) {
-    std::cerr << "Invalid number" << std::endl
-              << "Usage:" << std::endl
-              << "Type the number for corresponding to the test(s) you want to "
-                 "run"
-              << std::endl
-              << "1. to_High_Increment" << std::endl
-              << "2. to_Low_Increment" << std::endl
-              << "3. to_Low_init" << std::endl
-              << "4. to_High_init" << std::endl
-              << "5. Valid Bureaucrat" << std::endl
-              << "6. Run all tests🧪" << std::endl;
-    return 1;
-  }
   switch (arg) {
   case (1):
-    to_High_Increment();
+    big_Form_sign();
     break;
   case (2):
-    to_Low_Decrement();
+    small_Form_sign();
     break;
   case (3):
-    to_Low_init();
+    big_Form_exec();
     break;
   case (4):
-    to_High_init();
+    small_Form_exec();
     break;
   case (5):
-    valid_Bureaucrat();
+    be_signed();
     break;
   default:
-    to_High_Increment();
-    to_Low_Decrement();
-    to_Low_init();
-    to_High_init();
-    valid_Bureaucrat();
+    big_Form_sign();
+    small_Form_sign();
+    big_Form_exec();
+    small_Form_exec();
+    be_signed();
   }
-  Form test("test", 15, 17);
-  std::cout << test.getName();
 }
