@@ -60,6 +60,6 @@ void Bureaucrat::decrementGrade() {
 // Insertion overload
 
 std::ostream &operator<<(std::ostream &os, Bureaucrat const &bureaucrat) {
-  os << bureaucrat.getName() << " " << bureaucrat.getGrade() << std::endl;
+  os << bureaucrat.getName() << ", bureaucrat grade " << bureaucrat.getGrade() << std::endl;
   return os;
 }
