@@ -1,8 +1,8 @@
 NAME = this_is_starting_to_get_annoying
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic-errors
-SRC = main.cpp Bureacrat.cpp Form.cpp
+SRC = main.cpp Bureacrat.cpp AForm.cpp
 CXX = c++
-HDR = Bureacrat.hpp Form.hpp
+HDR = Bureacrat.hpp AForm.hpp
 OBJ = $(SRC:%.cpp=%.o)
 
 all: $(NAME)
