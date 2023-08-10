@@ -11,6 +11,7 @@ $(NAME): $(OBJ) $(HDR)
 	@$(CXX) $(CPPFLAGS) $(OBJ) -o $(NAME)
 clean:
 	@rm -f *.o
+	@rm -f *_shrubbery
 fclean: clean
 	@rm -f $(NAME)
 re: fclean all

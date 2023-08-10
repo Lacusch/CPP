@@ -75,7 +75,7 @@ int main(int ac, char **av) {
               << "3. big_Form_exec" << std::endl
               << "4. small_Form_exec" << std::endl
               << "5. be_signed" << std::endl
-              << "6. Run all tests🧪" << std::endl;
+              << "6-n Run all tests🧪" << std::endl;
     return 1;
   }
   int arg = atoi(av[1]);

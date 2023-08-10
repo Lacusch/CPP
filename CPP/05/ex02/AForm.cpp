@@ -66,8 +66,8 @@ const char *AForm::FormIsNotSignedException::what() const throw() {
 }
 
 std::ostream &operator<<(std::ostream &os, AForm const &AForm) {
-  os << AForm.getName() << " AForm has a required grade of "
-     << AForm.get_Sign_Grade() << " and is ";
+  os << AForm.getName() << " AForm has a required sign grade of "
+     << AForm.get_Sign_Grade() << ", required exec grade of " << AForm.get_Execute_Grade() << " and is ";
   if (AForm.is_Signed()) {
     os << "is signed" << std::endl;
   } else {
