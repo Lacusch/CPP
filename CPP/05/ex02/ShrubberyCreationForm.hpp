@@ -1,7 +1,7 @@
 #include "AForm.hpp"
 #include "Bureacrat.hpp"
 
-class ShrubberyCreationForm : AForm{
+class ShrubberyCreationForm : public AForm{
 public:
     ShrubberyCreationForm(std::string const & target);
     virtual void execute(Bureaucrat const & executor) const;

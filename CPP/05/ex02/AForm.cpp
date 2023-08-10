@@ -4,7 +4,8 @@
 #include <ostream>
 #include <string>
 
-AForm::AForm(std::string const &name, const int sign_grade, const int exec_grade)
+AForm::AForm(std::string const &name, const int sign_grade,
+             const int exec_grade)
     : name(name), is_signed(false), sign_grade(sign_grade),
       execute_grade(exec_grade) {
   if (sign_grade < max_grade || exec_grade < max_grade) {
@@ -60,10 +61,14 @@ const char *AForm::GradeTooHighException::what() const throw() {
   return "The Grade is too high";
 }
 
-std::ostream &operator<<(std::ostream &os, AForm const &Aform) {
-  os << Aform.getName() << " Aform has a required grade of " << Aform.get_Sign_Grade()
-     << " and is ";
-  if (Aform.is_Signed()) {
+const char *AForm::FormIsNotSignedException::what() const throw() {
+  return "Form is not signed";
+}
+
+std::ostream &operator<<(std::ostream &os, AForm const &AForm) {
+  os << AForm.getName() << " AForm has a required grade of "
+     << AForm.get_Sign_Grade() << " and is ";
+  if (AForm.is_Signed()) {
     os << "is signed" << std::endl;
   } else {
     os << "is NOT signed" << std::endl;

@@ -3,15 +3,24 @@
 #include <exception>
 #include <iostream>
 #include "PresidentialPardonForm.hpp"
+#include "ShrubberyCreationForm.hpp"
 
 int main(int ac, char **av) {
   (void)ac;
   (void)av;
   PresidentialPardonForm f("Me");
-  Bureaucrat b(50, "hello");
+  ShrubberyCreationForm f1("hello_tree");
+  Bureaucrat b(1, "hello");
   try {
+    b.signForm(f);
   f.execute(b);
   } catch (std::exception & e) {
-   std::cout << e.what() << std::endl; 
+   std::cout << e.what() << std::endl;
+  }
+  try {
+   b.signForm(f1);
+   f.execute(b);
+  } catch (std::exception &e) {
+   std::cout << e.what() << std::endl;
   }
 }

@@ -2,6 +2,7 @@
 #define A_FORM_HPP
 #include "Bureacrat.hpp"
 #include "string"
+#include <exception>
 class AForm {
 public:
   // Orthodox Canonical AForm
@@ -30,6 +31,10 @@ public:
   class GradeTooHighException : public std::exception {
   public:
     virtual const char *what() const throw();
+  };
+  class FormIsNotSignedException : public std::exception {
+  public:
+    virtual const char * what() const throw();
   };
 
 private:
