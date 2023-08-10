@@ -21,7 +21,7 @@ public:
   bool is_Signed() const;
   // setters
   void beSigned(Bureaucrat &signer);
-  virtual void execute(Bureaucrat const &target) const = 0;
+  virtual void execute(Bureaucrat const &executor) const = 0;
   // exceptions
   class GradeTooLowException : public std::exception {
   public:
