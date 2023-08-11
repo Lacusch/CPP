@@ -10,8 +10,10 @@
 static void wrong_Intern_Test() {
   Intern i;
   AForm *test = nullptr;
-  test = i.makeForm("asd", "ME");
-  test = i.makeForm("ShrubberyCreationForm", "ME");
+  // (void)test;
+  test = i.makeForm("tets", "test");
+  // test = i.makeForm("asd", "ME");
+  // test = i.makeForm("ShrubberyCreationForm", "ME");
 }
 
 int main(int ac, char **av) {
@@ -34,18 +36,18 @@ int main(int ac, char **av) {
   (void)arg;
   switch (arg) {
   case (1):
-    presidentialPardonForm_Test();
-    // break;
+    // presidentialPardonForm_Test();
+    break;
   case (2):
-    robotomyRequestForm_Test();
+    // robotomyRequestForm_Test();
     break;
   case (3):
-    shrubberyCreationForm_Test();
+    // shrubberyCreationForm_Test();
     break;
   default:
-    presidentialPardonForm_Test();
-    robotomyRequestForm_Test();
-    shrubberyCreationForm_Test();
+    // presidentialPardonForm_Test();
+    // robotomyRequestForm_Test();
+    // shrubberyCreationForm_Test();
     wrong_Intern_Test();
   }
   wrong_Intern_Test();

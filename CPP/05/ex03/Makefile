@@ -1,8 +1,8 @@
-NAME = Intern
+NAME = Interns
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic-errors
 SRC = main.cpp Bureacrat.cpp AForm.cpp PresidentialPardonForm.cpp \
 	  RobotomyRequestForm.cpp ShrubberyCreationForm.cpp Intern.cpp
-CXX = c++
+CXX = clang++
 HDR = Bureacrat.hpp AForm.hpp PresidentialPardonForm.hpp \
 	  RobotomyRequestForm.hpp ShrubberyCreationForm.hpp Intern.hpp
 OBJ = $(SRC:%.cpp=%.o)
