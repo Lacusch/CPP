@@ -35,8 +35,10 @@ AForm *Intern::makeForm(std::string const &name, std::string const &target) {
     break;
   case (1):
     Form = new RobotomyRequestForm(target);
+    break;
   case (2):
     Form = new PresidentialPardonForm(target);
+    break;
   default:
     std::cerr << "No form with that name found" << std::endl;
     Form = nullptr;
