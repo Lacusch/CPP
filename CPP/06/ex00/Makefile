@@ -1,6 +1,6 @@
 NAME = converter
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp Scalar.cpp
+SRC = main.cpp Scalar.cpp Parse.cpp
 CXX = c++
 HDR = Scalar.hpp
 OBJ = $(SRC:%.cpp=%.o)

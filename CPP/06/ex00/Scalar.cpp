@@ -56,11 +56,21 @@ void Scalar::convert_Char(std::string input) {
 }
 
 void Scalar::convert(std::string input) {
-  if (Scalar::handle_Literal(input)) {
-    return;
-  }
-  if (input.length() == 1 && !std::isdigit(input[0])) {
-    Scalar::convert_Char(input);
-    return;
+
+  int result = Scalar::parse_String(input);
+  std::cout << result << std::endl;
+  switch (result) {
+  case CHAR:
+    std::cout << "CHAR\n";
+    break;
+  case LITERAL:
+    std::cout << "LITERAL\n";
+    break;
+  case NB:
+    std::cout << "NB\n";
+    break;
+  default:
+    std::cout << "Invalid input, please give a valid one and try again"
+              << std::endl;
   }
 }
