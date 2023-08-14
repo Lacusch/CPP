@@ -27,5 +27,6 @@ private:
   bool static is_Lit(std::string const &string);
   bool static is_Nb(std::string &string);
   bool static is_Char(std::string const &string);
+
 };
 #endif
