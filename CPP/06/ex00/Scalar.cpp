@@ -3,6 +3,7 @@
 #include <cctype>
 #include <exception>
 #include <iomanip>
+#include <sstream>
 
 Scalar::Scalar(){};
 
@@ -16,29 +17,20 @@ Scalar &Scalar::operator=(Scalar const &rhs) {
   return *this;
 };
 
-bool Scalar::handle_Literal(std::string const &input) {
+void Scalar::print_Literal(std::string const &input) {
+  std::cout << "char : impossible" << std::endl
+            << "int : impossible" << std::endl;
   if (input.compare("+inf") == 0 || input.compare("+inff") == 0 ||
       input.compare("inff") == 0 || input.compare("inf") == 0) {
-    std::cout << "char : impossible" << std::endl
-              << "int : impossible" << std::endl
-              << "float : inff" << std::endl
-              << "double : inf " << std::endl;
-    return 1;
+    std::cout << std::numeric_limits<float>::infinity() << "f" << std::endl
+              << std::numeric_limits<double>::infinity() << std::endl;
   } else if (input.compare("-inf") == 0 || input.compare("-inff") == 0) {
-    std::cout << "char : impossible" << std::endl
-              << "int : impossible" << std::endl
-              << "float : -inff" << std::endl
-              << "double : -inf " << std::endl;
-    return 1;
-  }
-  if (input.compare("naff") == 0 || input.compare("naf") == 0) {
-    std::cout << "char : impossible" << std::endl
-              << "int : impossible" << std::endl
-              << "float : inff" << std::endl
-              << "double : inf " << std::endl;
-    return 1;
-  }
-  return false;
+    std::cout << "-" << std::numeric_limits<float>::infinity() << "f"
+              << std::endl
+              << "-" << std::numeric_limits<double>::infinity() << std::endl;
+  } else
+    std::cout << std::numeric_limits<float>::quiet_NaN() << "f" << std::endl
+              << std::numeric_limits<double>::quiet_NaN() << std::endl;
 }
 
 void Scalar::convert_Char(std::string input) {
@@ -55,19 +47,38 @@ void Scalar::convert_Char(std::string input) {
             << "double : " << static_cast<double>(input[0]) << std::endl;
 }
 
+// void Scalar::convertInt(double &db){
+
+// };
+
+void Scalar::convert_Number(std::string input) {
+  double nb;
+  std::istringstream iss(input);
+  iss >> nb;
+  if (nb > 32 && 127 > nb)
+    std::cout << "char " << static_cast<char>(nb) << std::endl;
+  else
+    std::cout << "char "
+              << " Non displayable " << std::endl;
+  // Scalar::convertInt(nb);
+  // Scalar::convertFloat(nb);
+  // Scalar::convertDouble(nb);
+}
+
 void Scalar::convert(std::string input) {
 
   int result = Scalar::parse_String(input);
   std::cout << result << std::endl;
   switch (result) {
   case CHAR:
-    std::cout << "CHAR\n";
+    Scalar::convert_Char(input);
     break;
   case LITERAL:
-    std::cout << "LITERAL\n";
+    Scalar::print_Literal(input);
     break;
   case NB:
     std::cout << "NB\n";
+    Scalar::convert_Number(input);
     break;
   default:
     std::cout << "Invalid input, please give a valid one and try again"

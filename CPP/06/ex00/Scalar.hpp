@@ -2,7 +2,6 @@
 #define SCALAR_HPP
 #include "string"
 
-// enum type { EMPTY, INVALID, LITERAL, NB, CHAR };
 enum type { CHAR, LITERAL, NB, EMPTY, INVALID };
 class Scalar {
 public:
@@ -13,8 +12,12 @@ public:
   void static convert(std::string input);
 
 private:
-  bool static handle_Literal(std::string const &intput);
+  void static print_Literal(std::string const &intput);
   void static convert_Char(std::string input);
+  void static convertInt(double &nb);
+  void static convertFloat(double &nb);
+  void static convertDouble(double &nb);
+  void static convert_Number(std::string input);
   // parse.cpp
 
   int static parse_String(std::string &input);
