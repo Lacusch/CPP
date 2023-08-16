@@ -1,12 +1,13 @@
-#include "Scalar.hpp"
+#include <sys/_types/_size_t.h>
+
 #include <cstddef>
 #include <string>
-#include <sys/_types/_size_t.h>
+
+#include "Scalar.hpp"
 
 bool Scalar::only_Space(std::string const &string) {
   for (size_t i = 0; i < string.size(); i++) {
-    if (string[i] != ' ')
-      return 0;
+    if (string[i] != ' ') return 0;
   }
   return 1;
 };
@@ -43,8 +44,7 @@ bool Scalar::is_Lit(std::string const &string) {
 bool Scalar::is_Nb(std::string &string) {
   bool dot;
   // removing potential f
-  if (string[string.size() - 1] == 'f')
-    string.erase(string.size() - 1);
+  if (string[string.size() - 1] == 'f') string.erase(string.size() - 1);
   for (size_t i = 0; i < string.size(); i++) {
     if (string[i] == '.') {
       if (!dot)
@@ -52,15 +52,13 @@ bool Scalar::is_Nb(std::string &string) {
       else
         return false;
     }
-    if ((string[i] > '9' || string[i] < '0') && string[i] != '.')
-      return false;
+    if ((string[i] > '9' || string[i] < '0') && string[i] != '.') return false;
   }
   return true;
 };
 #include "iostream"
 bool Scalar::is_Char(std::string const &string) {
-  if (string.size() > 1)
-    return false;
+  if (string.size() > 1) return false;
   if (std::isprint(string[0])) {
     return true;
   }
@@ -69,16 +67,11 @@ bool Scalar::is_Char(std::string const &string) {
 
 int Scalar::parse_String(std::string &input) {
   std::string trimmed;
-  if (Scalar::only_Space(input))
-    return EMPTY;
+  if (Scalar::only_Space(input)) return EMPTY;
   trimmed = Scalar::trim_Space(input);
-  if (Scalar::invalid_Space(input))
-    return INVALID;
-  if (Scalar::is_Lit(input))
-    return LITERAL;
-  if (Scalar::is_Nb(input))
-    return NB;
-  if (Scalar::is_Char(input))
-    return CHAR;
+  if (Scalar::invalid_Space(input)) return INVALID;
+  if (Scalar::is_Lit(input)) return LITERAL;
+  if (Scalar::is_Nb(input)) return NB;
+  if (Scalar::is_Char(input)) return CHAR;
   return INVALID;
 };
