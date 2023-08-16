@@ -99,7 +99,6 @@ void Scalar::convert(std::string input) {
     Scalar::print_Literal(input);
     break;
   case NB:
-    std::cout << "NB\n";
     Scalar::convert_Number(input);
     break;
   default:
