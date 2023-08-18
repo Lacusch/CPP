@@ -17,5 +17,14 @@ re: fclean all
 
 run: all
 	@./$(NAME)
-
+1:
+	./$(NAME) 1
+2:
+	./$(NAME) 2
+3:
+	./$(NAME) 3
+4:
+	./$(NAME) 4
+5:
+	./$(NAME) 5
 .PHONY: all clean fclean re run
