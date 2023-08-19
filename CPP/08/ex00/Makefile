@@ -2,7 +2,7 @@ NAME = easy_find
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = main.cpp 
 CXX = c++
-HDR = easyfind.tpp
+HDR = easyfind.hpp
 OBJ = $(SRC:%.cpp=%.o)
 
 all: $(NAME)

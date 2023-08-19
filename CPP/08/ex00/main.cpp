@@ -1,4 +1,4 @@
-#include "easyfind.tpp"
+#include "easyfind.hpp"
 #include <iostream>
 #include <vector>
 
