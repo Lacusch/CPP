@@ -2,6 +2,7 @@
 #define SPAN_HPP
 #include <exception>
 #include <stdexcept>
+#include <sys/_types/_size_t.h>
 #include <vector>
 class Span {
 public:
@@ -13,12 +14,16 @@ public:
   void addNumber(int nb);
   int shortestSpan();
   int longestSpan();
-  class no_Span : public std::exception {
-  public:
-    virtual const char *what() const throw();
-  };
-  int get_Size();
+  int get_Size() const;
+  int get_Max_Size() const;
   std::vector<int> numbers;
+  template <typename InputIterator>
+  void addRange(InputIterator begin, InputIterator end) {
+    while (begin != end) {
+      addNumber(*begin);
+      ++begin;
+    }
+  }
 
 private:
   Span();
