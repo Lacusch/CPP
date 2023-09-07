@@ -11,7 +11,7 @@ int main() {
   numbers.push_back(50);
 
   int value = 30;
-  int index = easyfind(numbers, value);
+  int index = EasyFind(numbers, value);
   if (index != -1) {
     std::cout << "Value " << value << " found at index " << index << std::endl;
   } else {
@@ -19,7 +19,7 @@ int main() {
   }
 
   value = 60;
-  index = easyfind(numbers, value);
+  index = EasyFind(numbers, value);
   if (index != -1) {
     std::cout << "Value " << value << " found at index " << index << std::endl;
   } else {

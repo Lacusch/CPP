@@ -3,7 +3,7 @@
 
 #include <algorithm>
 
-template <typename T> int easyfind(T &container, int value) {
+template <typename T> int EasyFind(T &container, int value) {
   typename T::iterator result =
       std::find(container.begin(), container.end(), value);
 
