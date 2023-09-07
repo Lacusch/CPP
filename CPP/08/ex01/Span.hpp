@@ -24,6 +24,7 @@ public:
       ++begin;
     }
   }
+  void print_numbers() const;
 
 private:
   Span();
