@@ -1,4 +1,4 @@
-NAME = bct
+NAME = btc
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
 SRC = main.cpp MutantStack.cpp
 CXX = c++

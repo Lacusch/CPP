@@ -1,6 +1,7 @@
 # Bitcoin Exchange
 
-- [ ]Create a fuction to fill the map (day / moth)
-- [ ]Get the info from the csv into the programm
+- [x]Create a function to fill the map (day / month)
+- [ ]Get the info from the csv into the program
+  - [ ]Check the Handle errors along the way
 - [ ]Error checking
 - [ ]Profit?!
