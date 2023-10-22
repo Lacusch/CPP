@@ -1,8 +1,8 @@
 NAME = btc
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp MutantStack.cpp
+SRC = main.cpp BitcoinExchange.cpp
 CXX = c++
-HDR = MutantStack.hpp
+HDR = BitcoinExchange.hpp
 OBJ = $(SRC:%.cpp=%.o)
 
 all: $(NAME)

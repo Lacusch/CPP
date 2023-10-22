@@ -20,8 +20,6 @@ BitcoinExchange::BitcoinExchange() {
     while (std::getline(data_csv, line))
       database.insert(
           std::pair<std::string, float>(getDate(line), getValue(line)));
-    // getDate return a substring of the date
-    // getValue returns the value as a float
     data_csv.close();
     validateDatabase();
     // check the database for errors;
@@ -60,4 +58,18 @@ void BitcoinExchange::setDaysOfMonth() {
   daysOfMonth.insert(std::make_pair(12, 31));
 }
 
-void BitcoinExchange::validateDatabase() const {}
+void BitcoinExchange::validateDatabase() const {
+  
+}
+
+std::string BitcoinExchange::getDate(std::string line) const {
+  return line.substr(0, line.find(","));
+}
+
+float BitcoinExchange::getValue() const {
+  if (line.find(",") != std::string::npos && line[line.size() - 1] != ',')
+		return std::stof(line.substr(line.find(",") + 1));
+	else
+		throw std::logic_error("Invalid value in csv database");
+	return -1;
+}

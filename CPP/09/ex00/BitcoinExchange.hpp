@@ -1,6 +1,8 @@
 #ifndef BITCOIN_EXCHANGE_HPP
 #define BITCOIN_EXCHANGE_HPP
 #include <map>
+#include <string>
+
 class BitcoinExchange {
 public:
   // orthodox
@@ -15,7 +17,7 @@ private:
   std::map<std::string, float> database;
   void setDaysOfMonth();
   void validateDatabase() const;
-  std::string getDate(std::string);
-  float getValue(std::string);
+  std::string getDate(std::string line) const;
+  float getValue(std::string line) const;
 };
 #endif
