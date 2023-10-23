@@ -98,19 +98,22 @@ void BitcoinExchange::exchange() {
   if (input.is_open()) {
     size_t i = 0;
     while (std::getline(input, line)) {
-      if (i++ > 0)
+      if (i > 0)
         if (validLine(line)) {
+          // std::cout << "line is : " << line << std::endl;
           std::string date = line.substr(0, line.find(" "));
-          float coin_nbr = std::atof(line.substr(line.find("|"), +2).c_str());
+          
+          float coin_nbr = std::atof(line.substr(line.find("|") + 2).c_str());
           float value = getExchangeRate(date);
           if (value > 0) {
-            std::cout << date << "=>" << coin_nbr << std::fixed
+            std::cout << date << " => " << coin_nbr << " = " << std::fixed
                       << std::setprecision(2) << coin_nbr * value << std::endl;
           } else {
             std::cout << "Error: "
                       << "No information on this date" << std::endl;
           }
         }
+      i++;
     }
     input.close();
   }
