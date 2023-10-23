@@ -2,6 +2,7 @@
 #define BITCOIN_EXCHANGE_HPP
 #include "iostream"
 #include <map>
+#include <sstream>
 #include <string>
 enum errors {
   NO_ERROR,
@@ -24,7 +25,7 @@ public:
   void exchange();
 
 private:
-  std::map<unsigned int, unsigned int> daysOfMonth;
+  std::map< int, int> daysOfMonth;
   std::map<std::string, float> database;
   std::string input_path;
   void setDaysOfMonth();
@@ -33,9 +34,12 @@ private:
   float getValue(std::string line) const;
   void checkInputPath(std::string input_path);
   void checkInputFile(std::string input_file);
-  bool validLine(std::string const &line);
-  errors validDate(std::string const &line);
-  errors validValue(std::string const &line);
-  void printError(errors error)const;
+  bool validLine(std::string const &line) const;
+  errors validDate(std::string) const;
+  errors validValue(std::string const &line) const;
+  void printError(errors error) const;
+  bool invalidMonth(std::string month) const;
+  bool invalidDay(std::string day) const;
+  float getExchangeRate(std::string date) const;
 };
 #endif

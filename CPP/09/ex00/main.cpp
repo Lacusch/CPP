@@ -8,7 +8,8 @@ int main(int ac, char **av) {
     if (ac != 2)
       throw std::logic_error("invalid number of args");
     BitcoinExchange Bitcoin(av[1]);
-  } catch (std::exception &error) {
+    Bitcoin.exchange();
+  } catch (std::exception & error) {
     std::cout << error.what() << std::endl;
   }
   return 0;
