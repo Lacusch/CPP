@@ -1,8 +1,8 @@
-NAME = btc
+NAME = RPN
 CPPFLAGS = -Wall -Wextra -Werror -std=c++98
-SRC = main.cpp BitcoinExchange.cpp
+SRC = main.cpp RPN.cpp
 CXX = c++
-HDR = BitcoinExchange.hpp
+HDR = RPN.hpp
 OBJ = $(SRC:%.cpp=%.o)
 
 all: $(NAME)
@@ -16,6 +16,6 @@ fclean: clean
 re: fclean all
 
 run: all
-	@./$(NAME) data/input.csv
+	@./$(NAME)
 
 .PHONY: all clean fclean re run
