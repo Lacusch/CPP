@@ -34,12 +34,12 @@ private:
   float getValue(std::string line) const;
   void checkInputPath(std::string input_path);
   void checkInputFile(std::string input_file);
-  bool validLine(std::string const &line) const;
-  errors validDate(std::string) const;
+  bool validLine(std::string const &line);
+  errors validDate(std::string);
   errors validValue(std::string const &line) const;
   void printError(errors error) const;
   bool invalidMonth(std::string month) const;
-  bool invalidDay(std::string day) const;
-  float getExchangeRate(std::string date) const;
+  bool invalidDay(std::string day, std::string month);
+  float getExchangeRate(std::string date);
 };
 #endif

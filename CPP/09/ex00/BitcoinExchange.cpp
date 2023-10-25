@@ -84,11 +84,14 @@ void BitcoinExchange::checkInputPath(std::string inputPath) {
 
 void BitcoinExchange::checkInputFile(std::string input_file) {
   std::string line;
-  std::fstream inputCsv("./data" + input_file);
+  std::fstream inputCsv(input_file);
   if (inputCsv.is_open()) {
+    std::getline(inputCsv, line);
     if (line.compare("date | value") != 0)
       throw std::logic_error("invalid header in input file");
     inputCsv.close();
+  } else {
+    throw std::logic_error(input_file + " can't be opened");
   }
 }
 
@@ -100,9 +103,8 @@ void BitcoinExchange::exchange() {
     while (std::getline(input, line)) {
       if (i > 0)
         if (validLine(line)) {
-          // std::cout << "line is : " << line << std::endl;
           std::string date = line.substr(0, line.find(" "));
-          
+
           float coin_nbr = std::atof(line.substr(line.find("|") + 2).c_str());
           float value = getExchangeRate(date);
           if (value > 0) {
@@ -119,7 +121,7 @@ void BitcoinExchange::exchange() {
   }
 }
 
-bool BitcoinExchange::validLine(std::string const &line) const {
+bool BitcoinExchange::validLine(std::string const &line) {
   errors error;
   std::string date = line.substr(0, line.find(" "));
   std::string value;
@@ -128,13 +130,14 @@ bool BitcoinExchange::validLine(std::string const &line) const {
     error = NO_ERROR;
   } else
     error = NO_VALUE;
-  if (error != NO_ERROR || (error = validDate(line)) || (error = validValue(line))) {
+  if (error != NO_ERROR || (error = validDate(line)) ||
+      (error = validValue(line))) {
     printError(error);
     return false;
   }
   return true;
 }
-errors BitcoinExchange::validDate(std::string line) const {
+errors BitcoinExchange::validDate(std::string line) {
   std::string date, year, month, day;
   date = line.substr(0, line.find(" "));
   year = date.substr(0, date.find("-"));
@@ -147,7 +150,7 @@ errors BitcoinExchange::validDate(std::string line) const {
     return WRONG_YEAR;
   if (invalidMonth(month))
     return WRONG_MONTH;
-  if (invalidDay(day))
+  if (invalidDay(day, month))
     return WRONG_DAY;
   return NO_ERROR;
 };
@@ -162,19 +165,32 @@ bool BitcoinExchange::invalidMonth(std::string month) const {
   return true;
 }
 
-bool BitcoinExchange::invalidDay(std::string day) const {
-  std::map<int, int>::const_iterator dayIT = daysOfMonth.begin();
+bool BitcoinExchange::invalidDay(std::string day, std::string month) {
+  std::map<int, int>::iterator monthIt = daysOfMonth.begin();
   if (day[0] == '0' && day.length() == 2)
     day = day.substr(1);
-  if (day[0] == '0' && day.length() == 2)
-    day = day.substr(1);
-  for (; dayIT != daysOfMonth.end(); dayIT++)
-    if (dayIT->first == std::atoi(day.c_str()) && std::atoi(day.c_str()) > 0 &&
-        dayIT->second >= std::atoi(day.c_str()))
+  if (month[0] == '0' && month.length() == 2)
+    month = month.substr(1);
+  for (; monthIt != daysOfMonth.end(); monthIt++)
+    if (monthIt->first == std::atoi(month.c_str()) &&
+        std::atoi(day.c_str()) > 0 && monthIt->second >= std::atoi(day.c_str()))
       return false;
   return true;
 }
 
+// bool Bitcoin::validDay(std::string day, std::string month) {
+//   std::map<int, int>::iterator monthIt = months.begin();
+//   if (day[0] == '0' && day.length() == 2)
+//     day = day.substr(1);
+//   if (month[0] == '0' && month.length() == 2)
+//     month = month.substr(1);
+//   for (; monthIt != months.end(); monthIt++)
+//     if (monthIt->first == std::atoi(month.c_str()) &&
+//         std::atoi(day.c_str()) > 0 && monthIt->second >=
+//         std::atoi(day.c_str()))
+//       return true;
+//   return false;
+// }
 void BitcoinExchange::printError(errors error) const {
   switch (error) {
   case (NO_ERROR):
@@ -207,10 +223,10 @@ void BitcoinExchange::printError(errors error) const {
 }
 
 errors BitcoinExchange::validValue(std::string const &line) const {
-  std::string value = line.substr(line.find("|", +1));
-  std::stringstream number_stream(value);
+  std::string value = line.substr(line.find("|") + 1);
+  std::stringstream string_stream(value);
   float number;
-  number_stream >> number;
+  string_stream >> number;
   if (number < 0)
     return NOT_POSITIVE;
   if (number > 1000)
@@ -218,11 +234,12 @@ errors BitcoinExchange::validValue(std::string const &line) const {
   return NO_ERROR;
 }
 
-float BitcoinExchange::getExchangeRate(std::string date) const {
-  std::map<std::string, float>::const_iterator dataBase = database.begin();
-  for (; dataBase != database.begin(); dataBase++) {
-    if (dataBase->first.compare(date) == 0)
+float BitcoinExchange::getExchangeRate(std::string date) {
+  std::map<std::string, float>::iterator dataBase = database.begin();
+  for (; dataBase != database.end(); dataBase++) {
+    if (dataBase->first.compare(date) == 0) {
       return dataBase->second;
+    }
   }
   dataBase = database.lower_bound(date);
   if (dataBase == database.begin())
