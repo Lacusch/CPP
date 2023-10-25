@@ -5,10 +5,7 @@
 #include <stdexcept>
 #include <string>
 #include <sys/_types/_size_t.h>
-/**
- * @brief Construct a new Bitcoin Exchange:: Bitcoin Exchange object
- *
- */
+
 BitcoinExchange::BitcoinExchange(char *cStringPath) {
   input_path = cStringPath;
   checkInputPath(input_path);
@@ -26,7 +23,6 @@ BitcoinExchange::BitcoinExchange(char *cStringPath) {
       database.insert(
           std::pair<std::string, float>(getDate(line), getValue(line)));
     data_csv.close();
-    validateDatabase();
   } else {
     throw std::logic_error("Error: Can't find data");
   }
@@ -61,8 +57,6 @@ void BitcoinExchange::setDaysOfMonth() {
   daysOfMonth.insert(std::make_pair(11, 30));
   daysOfMonth.insert(std::make_pair(12, 31));
 }
-
-void BitcoinExchange::validateDatabase() const {}
 
 std::string BitcoinExchange::getDate(std::string line) const {
   return line.substr(0, line.find(","));
@@ -178,19 +172,6 @@ bool BitcoinExchange::invalidDay(std::string day, std::string month) {
   return true;
 }
 
-// bool Bitcoin::validDay(std::string day, std::string month) {
-//   std::map<int, int>::iterator monthIt = months.begin();
-//   if (day[0] == '0' && day.length() == 2)
-//     day = day.substr(1);
-//   if (month[0] == '0' && month.length() == 2)
-//     month = month.substr(1);
-//   for (; monthIt != months.end(); monthIt++)
-//     if (monthIt->first == std::atoi(month.c_str()) &&
-//         std::atoi(day.c_str()) > 0 && monthIt->second >=
-//         std::atoi(day.c_str()))
-//       return true;
-//   return false;
-// }
 void BitcoinExchange::printError(errors error) const {
   switch (error) {
   case (NO_ERROR):
