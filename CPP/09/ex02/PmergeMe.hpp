@@ -30,19 +30,10 @@ private:
   void sort_deque();
   void throw_error(errors e);
   void checkDuplicates(std::vector<int> v, int value);
-  void printDeque() const;
   std::vector<int> jacobstahl;
-
-  // print vector template
-  template <typename T> void printContainer(const std::vector<T> &vec) {
-    std::cout << "Vector size is: " << vec.size()
-              << " and it's elements are: " << std::endl;
-    for (std::vector<int>::const_iterator it = vec.cbegin(); it != vec.cend();
-         it++) {
-      std::cout << *it << " ";
-    }
-    std::cout << std::endl;
-  }
+  int bSearchVectorPairs(const std::vector<std::pair<int, int>> &vec_pair, int key,
+                         int start, int end);
+  int bSearchVector(const std::vector<int> &vector, int key, int start, int end);
   // print vector template
   template <typename T> void printVector(const std::vector<T> &vec) {
     std::cout << "Vector size is: " << vec.size()
