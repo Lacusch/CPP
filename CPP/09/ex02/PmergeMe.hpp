@@ -29,6 +29,8 @@ private:
   std::deque<int> deque;
   std::vector<int> sorted_vector;
   std::deque<int> sorted_deque;
+  std::vector<int> j_vector;
+  std::vector<int> build_sequence_vector(int b_len);
   void check_input();
   void parse_into_containers();
   void parse_input();
@@ -76,4 +78,5 @@ public:
   PmergeMe &operator=(PmergeMe const &rhs);
   void sort();
 };
+int jacobsthal(int n);
 #endif

@@ -22,8 +22,18 @@ test:
 t5:
 	@$(eval ARG = $(shell seq 1 20000 | shuf -n 5))
 	@./PmergeMe $(ARG)
-
 t1k:
 	@$(eval ARG = $(shell seq 1 20000 | shuf -n 1000))
+	@./PmergeMe $(ARG)
+t5k:
+	@$(eval ARG = $(shell seq 1 20000 | shuf -n 5000))
+	@./PmergeMe $(ARG)
+
+t10k:
+	@$(eval ARG = $(shell seq 1 20000 | shuf -n 10000))
+	@./PmergeMe $(ARG)
+
+t15k:
+	@$(eval ARG = $(shell seq 1 50000 | shuf -n 15000))
 	@./PmergeMe $(ARG)
 .PHONY: all clean fclean re run
