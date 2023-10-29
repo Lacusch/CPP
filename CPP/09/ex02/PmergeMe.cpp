@@ -101,10 +101,16 @@ void PmergeMe::parse_into_containers() {
 void PmergeMe::sort() {
   check_input();
   parse_into_containers();
-  // printVector(vector);
-  // printDeque(deque);
-  // sort_vector();
+  printVector(vector, 'b');
+  clock_t start_vector = std::clock();
+  sort_vector();
+  clock_t end_vector = std::clock();
+  printVector(sorted_vector, 'a');
+  print_time_diff(start_vector, end_vector, 'v');
+  // clock_t start_deque = std::clock();
   // sort_deque();
+  // clock_t end_deque = std::clock();
+  // print_time_diff(start_deque, end_deque, 'd')
 }
 
 void PmergeMe::checkDuplicates(std::vector<int> v, int value) {
@@ -126,22 +132,22 @@ void PmergeMe::sort_vector() {
   }
   // 2.
   // group the list into pairs
-  std::vector<std::pair<int, int>> int_pair;
+  std::vector<std::pair<int, int> > int_pair;
   for (size_t i = 0; i < vector.size() / 2; i++)
-    int_pair.push_back(std::make_pair(2 * i, 2 * i + 1));
-  // sort he newly created pairs
+    int_pair.push_back(std::make_pair(vector[2 * i], vector[2 * i + 1]));
+  // sort the newly created pairs
   for (size_t i = 0; i < int_pair.size(); i++) {
-    if (int_pair[i].first > int_pair[i].second)
+    if (int_pair[i].first < int_pair[i].second)
       std::swap(int_pair[i].first, int_pair[i].second);
   }
   // 3.
   // sort the pairs iteratively with binary sort
-  std::vector<std::pair<int, int>> sorted_pairs;
-  for (size_t i = 0; i < int_pair.size(); i++) {
+  std::vector<std::pair<int, int> > sorted_pairs;
+  for (size_t i = 0; i < vector.size() / 2; i++) {
     if (i == 0)
       sorted_pairs.push_back(int_pair[i]);
     else {
-      int position = bSearchVectorPairs(sorted_pairs, sorted_pairs[i].first, 0,
+      int position = bSearchVectorPairs(sorted_pairs, int_pair[i].first, 0,
                                         sorted_pairs.size() - 1);
       sorted_pairs.insert(sorted_pairs.begin() + position, int_pair[i]);
     }
@@ -153,20 +159,24 @@ void PmergeMe::sort_vector() {
   for (size_t i = 0; i < int_pair.size(); i++) {
     main_chain.push_back(sorted_pairs[i].first);
   }
-
   // 4 ii.
   // use binary insertion on the Jacobstahl Numbers
   for (size_t i = 0; i < int_pair.size(); i++) {
     int value = sorted_pairs[jacobstahl[i] - 1].second;
     int position = bSearchVector(main_chain, value, 0, main_chain.size());
+    main_chain.insert(main_chain.begin() + position, value);
   }
   // handle odd number
+  if (has_odd && odd_number >= 0) {
+    int position =
+        bSearchVector(main_chain, odd_number, 0, main_chain.size() - 1);
+    main_chain.insert(main_chain.begin() + position, odd_number);
+  }
   sorted_vector = main_chain;
 }
 
-int PmergeMe::bSearchVectorPairs(
-    const std::vector<std::pair<int, int>> &vec_pair, int key, int start,
-    int end) {
+int PmergeMe::bSearchVectorPairs(std::vector<std::pair<int, int> > vec_pair,
+                                 int key, int start, int end) {
   while (start <= end) {
     int mid = start + (end - start) / 2;
     if (vec_pair[mid].first == key) {
@@ -193,4 +203,27 @@ int PmergeMe::bSearchVector(const std::vector<int> &vector, int key, int start,
     }
   }
   return start;
+}
+
+void PmergeMe::print_time_diff(clock_t start, clock_t end, char c) {
+  clock_t res;
+  std::string micro = "\xC2\xB5";
+  if (c == 'v')
+    std::cout << "The time it took to sort Vector is : ";
+  else if (c == 'd')
+    std::cout << "The time it took to sort Deque is : ";
+  res = static_cast<double>(end - start) / CLOCKS_PER_SEC * 1000000;
+  if (res > 1000)
+    std::cout << res / 1000 << "ms" << std::endl;
+  else
+    std::cout << res << micro << "s" << std::endl;
+}
+
+int jacobsNumberGen(int n) {
+  int term1 = n * std::ceil(std::log2(3.0 * n / 4.0));
+  int term2 = std::floor(std::pow(2, std::floor(std::log2(6.0 * n))) / 3);
+  int term3 = std::floor(std::log2(6.0 * n) /
+                         2); // Thanks AI overlord for helping me with this
+  int result = term1 - term2 + term3;
+  return result;
 }
