@@ -89,12 +89,13 @@ void PmergeMe::parse_into_containers() {
 void PmergeMe::sort() {
   check_input();
   parse_into_containers();
-  this->j_vector = build_sequence<std::vector<int> >(vector.size() / 2);
-  this->j_deque = build_sequence<std::deque<int> >(vector.size() / 2);
-  // this->j_deque = build_sequence_deque()
+  std::vector<int> const &j_vector =
+      build_sequence<std::vector<int> >(vector.size() / 2);
+  // std::deque<int> const &j_deque =
+  // build_sequence<std::deque<int> >(vector.size() / 2);
   printVector(vector, 'b');
   clock_t start_vector = std::clock();
-  sort_vector();
+  sort_vector(vector, j_vector);
   clock_t end_vector = std::clock();
   printVector(sorted_vector, 'a');
   print_time_diff(start_vector, end_vector, 'v');
@@ -109,23 +110,25 @@ void PmergeMe::checkDuplicates(std::vector<int> v, int value) {
     throw_error(DUPLICATE_NUMBER);
 }
 
-void PmergeMe::sort_vector() {
-  if (vector.size() == 0) {
+void PmergeMe::sort_vector(std::vector<int> &original_vector,
+                           const std::vector<int> j_vector) {
+  if (original_vector.size() == 0) {
     sorted_vector = vector;
     return;
   }
   // 1.
   // check if the list is odd or not
-  if (vector.size() % 2 != 0) {
+  if (original_vector.size() % 2 != 0) {
     has_odd = true;
-    odd_number = vector.back();
-    vector.pop_back();
+    odd_number = original_vector.back();
+    original_vector.pop_back();
   }
   // 2.
   // group the list into pairs
   std::vector<std::pair<int, int> > int_pair;
-  for (size_t i = 0; i < vector.size() / 2; i++)
-    int_pair.push_back(std::make_pair(vector[2 * i], vector[2 * i + 1]));
+  for (size_t i = 0; i < original_vector.size() / 2; i++)
+    int_pair.push_back(
+        std::make_pair(original_vector[2 * i], original_vector[2 * i + 1]));
   // sort the newly created pairs
   for (size_t i = 0; i < int_pair.size(); i++) {
     if (int_pair[i].first < int_pair[i].second)
@@ -134,14 +137,13 @@ void PmergeMe::sort_vector() {
   // 3.
   // sort the pairs iteratively with binary sort
   std::vector<std::pair<int, int> > sorted_pairs;
-  for (size_t i = 0; i < vector.size() / 2; i++) {
+  for (size_t i = 0; i < original_vector.size() / 2; i++) {
     if (i == 0)
       sorted_pairs.push_back(int_pair[i]);
     else {
       int position = bSearchPairs(sorted_pairs, int_pair[i].first, 0,
                                   sorted_pairs.size() - 1);
-      // int position = bSearchVectorPairs(sorted_pairs, int_pair[i].first, 0,
-      // sorted_pairs.size() - 1);
+      ;
       sorted_pairs.insert(sorted_pairs.begin() + position, int_pair[i]);
     }
   }
