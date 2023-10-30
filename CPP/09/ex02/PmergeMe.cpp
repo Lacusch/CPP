@@ -7,19 +7,7 @@
 #include <utility>
 #include <vector>
 
-PmergeMe::PmergeMe(int ac, char **av)
-    : ac(ac), av(av)
-
-{
-  std::string const jacob(JACOBSTAHL_LIST);
-  std::istringstream stringsStream(jacob);
-  std::string line;
-  while (std::getline(stringsStream, line, ' ')) {
-    char *end_ptr = &line[0] + line.size();
-    int value = std::strtol(line.c_str(), &end_ptr, 10);
-    jacobstahl.push_back(value);
-  }
-}
+PmergeMe::PmergeMe(int ac, char **av) : ac(ac), av(av) {}
 PmergeMe::~PmergeMe(){};
 
 PmergeMe::PmergeMe(const PmergeMe &other) { *this = other; }
@@ -101,7 +89,9 @@ void PmergeMe::parse_into_containers() {
 void PmergeMe::sort() {
   check_input();
   parse_into_containers();
-  this->j_vector = build_sequence_vector(vector.size() / 2);
+  this->j_vector = build_sequence<std::vector<int> >(vector.size() / 2);
+  this->j_deque = build_sequence<std::deque<int> >(vector.size() /2);
+  // this->j_deque = build_sequence_deque()
   printVector(vector, 'b');
   clock_t start_vector = std::clock();
   sort_vector();
@@ -219,36 +209,4 @@ void PmergeMe::print_time_diff(clock_t start, clock_t end, char c) {
     std::cout << res / 1000 << "ms" << std::endl;
   else
     std::cout << res << micro << "s" << std::endl;
-}
-
-std::vector<int> PmergeMe::build_sequence_vector(int b_len) {
-  std::vector<int> jacob_sequence;
-  std::vector<int> full_sequence;
-  int jacob_index = 2;
-
-  while (jacobsthal(jacob_index) < b_len + 2 - 1) {
-    jacob_sequence.push_back(jacobsthal(jacob_index));
-    jacob_index += 1;
-  }
-  for (size_t i = 0; i < jacob_sequence.size(); i++) {
-    if (i == 0)
-      full_sequence.push_back(jacob_sequence[i]);
-    else {
-      full_sequence.push_back(jacob_sequence[i]);
-      int range = jacob_sequence[i] - jacob_sequence[i - 1] - 1;
-      for (int j = 0; j < range; j++)
-        full_sequence.push_back(jacob_sequence[i] - (j + 1));
-    }
-  }
-  for (int i = 0; b_len > static_cast<int>(full_sequence.size()); i++)
-    full_sequence.push_back(jacob_sequence[jacob_sequence.size() - 1] + i + 1);
-  return (full_sequence);
-}
-
-int jacobsthal(int n) {
-  if (n == 0)
-    return (0);
-  if (n == 1)
-    return (1);
-  return (jacobsthal(n - 1) + 2 * jacobsthal(n - 2));
 }

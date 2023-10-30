@@ -8,17 +8,6 @@
 #include <vector>
 enum errors { NOT_NUMBER, EMPTY_INPUT, NUMBER_TOO_BIG, DUPLICATE_NUMBER };
 
-#define JACOBSTAHL_LIST                                                        \
-  "1 3 2 5 7 17 31 65 127 257 511 1025 2047 4097 8191 16385 32767 \
-65537 131071 262145 524287 1048577 2097151 4194305 8388607 \
-16777217 33554431 67108865 134217727 268435457 536870911 \
-1073741825 2147483647"
-
-// "0, 1, 1, 3, 5, 11, 21, 43, 85, 171, 341, 683, 1365, 2731, 5461, 10923,
-// 21845, 43691, 87381, 174763, 349525, 699051, 1398101, 2796203, 5592405,
-// 11184811, 22369621, 44739243, 89478485, 178956971, 357913941, 715827883,
-// 1431655765"
-
 class PmergeMe {
 private:
   int ac;
@@ -30,7 +19,7 @@ private:
   std::vector<int> sorted_vector;
   std::deque<int> sorted_deque;
   std::vector<int> j_vector;
-  std::vector<int> build_sequence_vector(int b_len);
+  std::deque<int> j_deque;
   void check_input();
   void parse_into_containers();
   void parse_input();
@@ -38,7 +27,6 @@ private:
   void sort_deque();
   void throw_error(errors e);
   void checkDuplicates(std::vector<int> v, int value);
-  std::vector<int> jacobstahl;
   int bSearchVectorPairs(std::vector<std::pair<int, int> > vec_pair, int key,
                          int start, int end);
   int bSearchVector(const std::vector<int> &vector, int key, int start,
@@ -69,6 +57,38 @@ private:
       std::cout << *it << " ";
     }
     std::cout << std::endl;
+  }
+  template <typename Container> 
+  Container build_sequence(int b_len) {
+    Container jacob_sequence;
+    Container full_sequence;
+    int jacob_index = 2;
+
+    while (jacobsthal(jacob_index) < b_len + 2 - 1) {
+      jacob_sequence.push_back(jacobsthal(jacob_index));
+      jacob_index += 1;
+    }
+    for (size_t i = 0; i < jacob_sequence.size(); i++) {
+      if (i == 0)
+        full_sequence.push_back(jacob_sequence[i]);
+      else {
+        full_sequence.push_back(jacob_sequence[i]);
+        int range = jacob_sequence[i] - jacob_sequence[i - 1] - 1;
+        for (int j = 0; j < range; j++)
+          full_sequence.push_back(jacob_sequence[i] - (j + 1));
+      }
+    }
+    for (int i = 0; b_len > static_cast<int>(full_sequence.size()); i++)
+      full_sequence.push_back(jacob_sequence[jacob_sequence.size() - 1] + i +
+                              1);
+    return (full_sequence);
+  }
+  template <typename number> number jacobsthal(number n) {
+    if (n == 0)
+      return (0);
+    if (n == 1)
+      return (1);
+    return (jacobsthal(n - 1) + 2 * jacobsthal(n - 2));
   }
 
 public:
