@@ -90,7 +90,7 @@ void PmergeMe::sort() {
   check_input();
   parse_into_containers();
   this->j_vector = build_sequence<std::vector<int> >(vector.size() / 2);
-  this->j_deque = build_sequence<std::deque<int> >(vector.size() /2);
+  this->j_deque = build_sequence<std::deque<int> >(vector.size() / 2);
   // this->j_deque = build_sequence_deque()
   printVector(vector, 'b');
   clock_t start_vector = std::clock();
@@ -138,8 +138,10 @@ void PmergeMe::sort_vector() {
     if (i == 0)
       sorted_pairs.push_back(int_pair[i]);
     else {
-      int position = bSearchVectorPairs(sorted_pairs, int_pair[i].first, 0,
-                                        sorted_pairs.size() - 1);
+      int position = bSearchPairs(sorted_pairs, int_pair[i].first, 0,
+                                  sorted_pairs.size() - 1);
+      // int position = bSearchVectorPairs(sorted_pairs, int_pair[i].first, 0,
+      // sorted_pairs.size() - 1);
       sorted_pairs.insert(sorted_pairs.begin() + position, int_pair[i]);
     }
   }
@@ -155,46 +157,15 @@ void PmergeMe::sort_vector() {
   for (size_t i = 0; i < int_pair.size(); i++) {
     int jacob_pos = j_vector[i] - 1;
     int value = sorted_pairs[jacob_pos].second;
-    int position = bSearchVector(main_chain, value, 0, main_chain.size());
+    int position = bSearch(main_chain, value, 0, main_chain.size());
     main_chain.insert(main_chain.begin() + position, value);
   }
   // handle odd number
   if (has_odd && odd_number >= 0) {
-    int position =
-        bSearchVector(main_chain, odd_number, 0, main_chain.size() - 1);
+    int position = bSearch(main_chain, odd_number, 0, main_chain.size() - 1);
     main_chain.insert(main_chain.begin() + position, odd_number);
   }
   sorted_vector = main_chain;
-}
-
-int PmergeMe::bSearchVectorPairs(std::vector<std::pair<int, int> > vec_pair,
-                                 int key, int start, int end) {
-  while (start <= end) {
-    int mid = start + (end - start) / 2;
-    if (vec_pair[mid].first == key) {
-      return mid;
-    } else if (vec_pair[mid].first < key) {
-      start = mid + 1;
-    } else {
-      end = mid - 1;
-    }
-  }
-  return start;
-}
-
-int PmergeMe::bSearchVector(const std::vector<int> &vector, int key, int start,
-                            int end) {
-  while (start <= end) {
-    int mid = start + (end - start) / 2;
-    if (vector[mid] == key) {
-      return mid;
-    } else if (vector[mid] < key) {
-      start = mid + 1;
-    } else {
-      end = mid - 1;
-    }
-  }
-  return start;
 }
 
 void PmergeMe::print_time_diff(clock_t start, clock_t end, char c) {

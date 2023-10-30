@@ -27,10 +27,6 @@ private:
   void sort_deque();
   void throw_error(errors e);
   void checkDuplicates(std::vector<int> v, int value);
-  int bSearchVectorPairs(std::vector<std::pair<int, int> > vec_pair, int key,
-                         int start, int end);
-  int bSearchVector(const std::vector<int> &vector, int key, int start,
-                    int end);
   void print_time_diff(clock_t start, clock_t end, char c);
   // print vector template
   template <typename T> void printVector(const std::vector<T> &vec, char c) {
@@ -58,8 +54,7 @@ private:
     }
     std::cout << std::endl;
   }
-  template <typename Container> 
-  Container build_sequence(int b_len) {
+  template <typename Container> Container build_sequence(int b_len) {
     Container jacob_sequence;
     Container full_sequence;
     int jacob_index = 2;
@@ -90,6 +85,34 @@ private:
       return (1);
     return (jacobsthal(n - 1) + 2 * jacobsthal(n - 2));
   }
+  template <typename Container>
+  int bSearch(const Container &c, int key, int start, int end) {
+    while (start <= end) {
+      int mid = start + (end - start) / 2;
+      if (c[mid] == key) {
+        return mid;
+      } else if (c[mid] < key) {
+        start = mid + 1;
+      } else {
+        end = mid - 1;
+      }
+    }
+    return start;
+  }
+  template <typename Container>
+  int bSearchPairs(Container c_pair, int key, int start, int end) {
+    while (start <= end) {
+      int mid = start + (end - start) / 2;
+      if (c_pair[mid].first == key) {
+        return mid;
+      } else if (c_pair[mid].first < key) {
+        start = mid + 1;
+      } else {
+        end = mid - 1;
+      }
+    }
+    return start;
+  }
 
 public:
   PmergeMe(int ac, char **av);
@@ -98,5 +121,4 @@ public:
   PmergeMe &operator=(PmergeMe const &rhs);
   void sort();
 };
-int jacobsthal(int n);
 #endif
