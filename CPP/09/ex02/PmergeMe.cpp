@@ -1,13 +1,7 @@
 #include "PmergeMe.hpp"
-#include <cstddef>
-#include <deque>
-#include <fstream>
-#include <stdexcept>
-#include <string>
-#include <utility>
-#include <vector>
 
-PmergeMe::PmergeMe(int ac, char **av) : ac(ac), av(av) {}
+PmergeMe::PmergeMe(int ac, char **av)
+    : ac(ac), av(av), has_odd(false), odd_number(-1) {}
 PmergeMe::~PmergeMe(){};
 
 PmergeMe::PmergeMe(const PmergeMe &other) { *this = other; }
@@ -91,18 +85,18 @@ void PmergeMe::sort() {
   parse_into_containers();
   std::vector<int> const &j_vector =
       build_sequence<std::vector<int> >(vector.size() / 2);
-  // std::deque<int> const &j_deque =
-  // build_sequence<std::deque<int> >(vector.size() / 2);
+  std::deque<int> const &j_deque =
+  build_sequence<std::deque<int> >(vector.size() / 2);
   printVector(vector, 'b');
   clock_t start_vector = std::clock();
   sort_vector(vector, j_vector);
   clock_t end_vector = std::clock();
   printVector(sorted_vector, 'a');
   print_time_diff(start_vector, end_vector, 'v');
-  // clock_t start_deque = std::clock();
-  // sort_deque();
-  // clock_t end_deque = std::clock();
-  // print_time_diff(start_deque, end_deque, 'd')
+  clock_t start_deque = std::clock();
+  sort_deque(deque, j_deque);
+  clock_t end_deque = std::clock();
+  print_time_diff(start_deque, end_deque, 'd');
 }
 
 void PmergeMe::checkDuplicates(std::vector<int> v, int value) {
@@ -113,7 +107,7 @@ void PmergeMe::checkDuplicates(std::vector<int> v, int value) {
 void PmergeMe::sort_vector(std::vector<int> &original_vector,
                            const std::vector<int> j_vector) {
   if (original_vector.size() == 0) {
-    sorted_vector = vector;
+    sorted_vector = original_vector;
     return;
   }
   // 1.
@@ -168,6 +162,70 @@ void PmergeMe::sort_vector(std::vector<int> &original_vector,
     main_chain.insert(main_chain.begin() + position, odd_number);
   }
   sorted_vector = main_chain;
+  this->has_odd = false;
+  this->odd_number = -1;
+}
+
+void PmergeMe::sort_deque(std::deque<int> &original_deque,
+                          const std::deque<int> j_deque) {
+  if (original_deque.size() == 0) {
+    sorted_deque = original_deque;
+    return;
+  }
+  // 1.
+  // check if the list is odd or not
+  if (original_deque.size() % 2 != 0) {
+    has_odd = true;
+    odd_number = original_deque.back();
+    original_deque.pop_back();
+  }
+  // 2.
+  // group the list into pairs
+  std::deque<std::pair<int, int> > int_pair;
+  for (size_t i = 0; i < original_deque.size() / 2; i++)
+    int_pair.push_back(
+        std::make_pair(original_deque[2 * i], original_deque[2 * i + 1]));
+  // sort the newly created pairs
+  for (size_t i = 0; i < int_pair.size(); i++) {
+    if (int_pair[i].first < int_pair[i].second)
+      std::swap(int_pair[i].first, int_pair[i].second);
+  }
+  // 3.
+  // sort the pairs iteratively with binary sort
+  std::deque<std::pair<int, int> > sorted_pairs;
+  for (size_t i = 0; i < original_deque.size() / 2; i++) {
+    if (i == 0)
+      sorted_pairs.push_back(int_pair[i]);
+    else {
+      int position = bSearchPairs(sorted_pairs, int_pair[i].first, 0,
+                                  sorted_pairs.size() - 1);
+      ;
+      sorted_pairs.insert(sorted_pairs.begin() + position, int_pair[i]);
+    }
+  }
+  // 4. i.
+  // create the main chain (so take the first elements of the sorted pairs,
+  // sorted[i].first and make a vector out of them)
+  std::deque<int> main_chain;
+  for (size_t i = 0; i < int_pair.size(); i++) {
+    main_chain.push_back(sorted_pairs[i].first);
+  }
+  // 4 ii.
+  // use binary insertion on the Jacobstahl Numbers
+  for (size_t i = 0; i < int_pair.size(); i++) {
+    int jacob_pos = j_deque[i] - 1;
+    int value = sorted_pairs[jacob_pos].second;
+    int position = bSearch(main_chain, value, 0, main_chain.size());
+    main_chain.insert(main_chain.begin() + position, value);
+  }
+  // handle odd number
+  if (has_odd && odd_number >= 0) {
+    int position = bSearch(main_chain, odd_number, 0, main_chain.size() - 1);
+    main_chain.insert(main_chain.begin() + position, odd_number);
+  }
+  sorted_deque = main_chain;
+  this->has_odd = false;
+  this->odd_number = -1;
 }
 
 void PmergeMe::print_time_diff(clock_t start, clock_t end, char c) {

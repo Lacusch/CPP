@@ -18,12 +18,12 @@ private:
   std::deque<int> deque;
   std::vector<int> sorted_vector;
   std::deque<int> sorted_deque;
-  std::deque<int> j_deque;
   void check_input();
   void parse_into_containers();
   void parse_input();
   void sort_vector(std::vector<int> &, const std::vector<int> j_vector);
-  void sort_deque();
+  void sort_deque(std::deque<int> &original_deque,
+                  const std::deque<int> j_deque);
   void throw_error(errors e);
   void checkDuplicates(std::vector<int> v, int value);
   void print_time_diff(clock_t start, clock_t end, char c);
@@ -112,9 +112,7 @@ private:
     }
     return start;
   }
-  // template <typename Container> void sortContainer() {
-  //
-  // }
+
 public:
   PmergeMe(int ac, char **av);
   ~PmergeMe();
