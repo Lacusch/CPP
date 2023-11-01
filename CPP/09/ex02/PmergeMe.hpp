@@ -37,7 +37,7 @@ private:
       std::cout << "Vector size is: " << vec.size() << std::endl;
       std::cout << "The elements before sorting" << std::endl;
     }
-    for (std::vector<int>::const_iterator it = vec.cbegin(); it != vec.cend();
+    for (std::vector<int>::const_iterator it = vec.begin(); it != vec.end();
          it++) {
       std::cout << *it << " ";
     }
@@ -47,7 +47,7 @@ private:
   template <typename T> void printDeque(const std::deque<T> &vec) {
     std::cout << "Deque size is: " << vec.size()
               << " and it's elements are: " << std::endl;
-    for (std::deque<int>::const_iterator it = vec.cbegin(); it != vec.cend();
+    for (std::deque<int>::const_iterator it = vec.begin(); it != vec.cend();
          it++) {
       std::cout << *it << " ";
     }

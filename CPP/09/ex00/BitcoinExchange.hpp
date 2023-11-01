@@ -1,9 +1,17 @@
 #ifndef BITCOIN_EXCHANGE_HPP
 #define BITCOIN_EXCHANGE_HPP
-#include "iostream"
+#include <algorithm>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
 #include <map>
 #include <sstream>
 #include <string>
+#ifdef __APPLE__
+#include <sys/_types/_size_t.h>
+#endif
+#ifndef __linux__
+#endif
 enum errors {
   NO_ERROR,
   WRONG_YEAR,
@@ -25,7 +33,7 @@ public:
   void exchange();
 
 private:
-  std::map< int, int> daysOfMonth;
+  std::map<int, int> daysOfMonth;
   std::map<std::string, float> database;
   std::string input_path;
   void setDaysOfMonth();

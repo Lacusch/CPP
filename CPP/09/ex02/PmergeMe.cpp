@@ -1,5 +1,6 @@
 #include "PmergeMe.hpp"
-
+#include <algorithm>
+#include <ctime>
 PmergeMe::PmergeMe(int ac, char **av)
     : ac(ac), av(av), has_odd(false), odd_number(-1) {}
 PmergeMe::~PmergeMe(){};
@@ -68,8 +69,8 @@ void PmergeMe::parse_into_containers() {
     while (std::getline(stringsStream, line, ' ')) {
       if (!line.empty()) {
         char *end_ptr = &line[0] + line.size();
-        long value = std::strtol(line.c_str(), &end_ptr, 10);
-        if (value > std::numeric_limits<int>::max())
+        long value = strtol(line.c_str(), &end_ptr, 10);
+        if (value > 2147483647)
           throw_error(NUMBER_TOO_BIG);
         // throws error in case of duplicates
         checkDuplicates(vector, static_cast<int>(value));
@@ -86,7 +87,7 @@ void PmergeMe::sort() {
   std::vector<int> const &j_vector =
       build_sequence<std::vector<int> >(vector.size() / 2);
   std::deque<int> const &j_deque =
-  build_sequence<std::deque<int> >(vector.size() / 2);
+      build_sequence<std::deque<int> >(vector.size() / 2);
   printVector(vector, 'b');
   clock_t start_vector = std::clock();
   sort_vector(vector, j_vector);

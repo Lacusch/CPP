@@ -6,8 +6,9 @@
 #include <stack>
 #include <stdexcept>
 #include <string>
+#ifdef __APPLE__
 #include <sys/_types/_size_t.h>
-
+#endif
 #define VALID_ELEMENTS " 01234566789+-/*"
 #define NUMBERS "0123456789"
 #define OPERATORS "+-*/"

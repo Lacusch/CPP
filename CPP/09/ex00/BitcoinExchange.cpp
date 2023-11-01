@@ -4,7 +4,6 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include <sys/_types/_size_t.h>
 
 BitcoinExchange::BitcoinExchange(char *cStringPath) {
   input_path = cStringPath;
@@ -63,9 +62,9 @@ std::string BitcoinExchange::getDate(std::string line) const {
 }
 
 float BitcoinExchange::getValue(std::string line) const {
-  if (line.find(",") != std::string::npos && line[line.size() - 1] != ',')
-    return std::stof(line.substr(line.find(",") + 1));
-  else
+  if (line.find(",") != std::string::npos && line[line.size() - 1] != ',') {
+    return (atof(line.substr(line.find(",") + 1).c_str()));
+  } else
     throw std::logic_error("Invalid value in csv database");
   return -1;
 }
@@ -78,7 +77,7 @@ void BitcoinExchange::checkInputPath(std::string inputPath) {
 
 void BitcoinExchange::checkInputFile(std::string input_file) {
   std::string line;
-  std::fstream inputCsv(input_file);
+  std::fstream inputCsv(input_file.c_str());
   if (inputCsv.is_open()) {
     std::getline(inputCsv, line);
     if (line.compare("date | value") != 0)
@@ -91,7 +90,7 @@ void BitcoinExchange::checkInputFile(std::string input_file) {
 
 void BitcoinExchange::exchange() {
   std::string line;
-  std::ifstream input(input_path);
+  std::ifstream input(input_path.c_str());
   if (input.is_open()) {
     size_t i = 0;
     while (std::getline(input, line)) {
