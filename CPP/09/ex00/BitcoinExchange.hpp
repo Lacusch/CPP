@@ -12,6 +12,8 @@
 #endif
 #ifndef __linux__
 #endif
+#define VALID "0123456789. |-+"
+#define DIGITS "0123456789"
 enum errors {
   NO_ERROR,
   WRONG_YEAR,
@@ -20,6 +22,7 @@ enum errors {
   NO_VALUE,
   NOT_POSITIVE,
   OUT_OF_RANGE,
+  BAD_INPUT
 };
 
 class BitcoinExchange {

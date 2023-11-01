@@ -1,4 +1,5 @@
 #include "BitcoinExchange.hpp"
+#include <algorithm>
 #include <fstream>
 #include <iomanip>
 #include <sstream>
@@ -78,15 +79,26 @@ void BitcoinExchange::checkInputPath(std::string inputPath) {
 void BitcoinExchange::checkInputFile(std::string input_file) {
   std::string line;
   std::fstream inputCsv(input_file.c_str());
-  if (inputCsv.is_open()) {
+  if (inputCsv.is_open() || inputCsv.peek() != inputCsv.eof()) {
     std::getline(inputCsv, line);
     if (line.compare("date | value") != 0)
       throw std::logic_error("invalid header in input file");
-    inputCsv.close();
   } else {
     throw std::logic_error(input_file + " can't be opened");
   }
+  while (std::getline(inputCsv, line)) {
+    if (line.find_first_not_of(VALID) != std::string::npos) {
+      throw std::logic_error("invalid character found in input .csv");
+    }
+  }
+  inputCsv.close();
 }
+
+// void checkInputFileDub(std::string input_file) {
+//   std::string line;
+//   std::fstream inputCsv(input_file.c_str());
+//   inputCsv.close();
+// }
 
 void BitcoinExchange::exchange() {
   std::string line;
@@ -100,7 +112,7 @@ void BitcoinExchange::exchange() {
 
           float coin_nbr = std::atof(line.substr(line.find("|") + 2).c_str());
           float value = getExchangeRate(date);
-          if (value > 0) {
+          if (value >= 0) {
             std::cout << date << " => " << coin_nbr << " = " << std::fixed
                       << std::setprecision(2) << coin_nbr * value << std::endl;
           } else {
@@ -131,6 +143,20 @@ bool BitcoinExchange::validLine(std::string const &line) {
   return true;
 }
 errors BitcoinExchange::validDate(std::string line) {
+  if (line.size() < 14)
+    return BAD_INPUT;
+  if (line.substr(0, 4).find_first_not_of(DIGITS) != std::string::npos)
+    return BAD_INPUT;
+  if (line[4] != '-' || line[7] != '-' || line[11] != '|' || line[10] != ' ' ||
+      line[12] != ' ')
+    return BAD_INPUT;
+  if (line.substr(5, 2).find_first_not_of(DIGITS) != std::string::npos)
+    return BAD_INPUT;
+  if (line.substr(8, 2).find_first_not_of(DIGITS) != std::string::npos)
+    return BAD_INPUT;
+  if (line.substr(13, std::string::npos).find_first_not_of("123456789.") !=
+      std::string::npos)
+    return BAD_INPUT;
   std::string date, year, month, day;
   date = line.substr(0, line.find(" "));
   year = date.substr(0, date.find("-"));
@@ -149,10 +175,10 @@ errors BitcoinExchange::validDate(std::string line) {
 };
 
 bool BitcoinExchange::invalidMonth(std::string month) const {
-  std::map<int, int>::const_iterator monthIt = daysOfMonth.begin();
   if (month[0] == '0' && month.length() == 2)
     month = month.substr(1);
-  for (; monthIt != daysOfMonth.end(); monthIt++)
+  for (std::map<int, int>::const_iterator monthIt = daysOfMonth.begin();
+       monthIt != daysOfMonth.end(); monthIt++)
     if (monthIt->first == std::atoi(month.c_str()))
       return false;
   return true;
@@ -198,6 +224,10 @@ void BitcoinExchange::printError(errors error) const {
   case (OUT_OF_RANGE):
     std::cout << "Error: "
               << "Out of range, number is too big" << std::endl;
+    break;
+  case (BAD_INPUT):
+    std::cout << "Error: "
+              << "bad input" << std::endl;
     break;
   }
 }
