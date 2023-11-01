@@ -47,20 +47,22 @@ void RPN::areValidChars() const {
     if (number_list.find(input[i]) != std::string::npos)
       numbers++;
     if (std::string(OPERATORS).find(input[i]) != std::string::npos)
-        operators++;
+      operators++;
   }
-   if (operators + 1 != numbers)
-        throw std::logic_error("Error: not enough operators");
+  if (operators + 1 != numbers)
+    throw std::logic_error("Error: not enough operators");
 }
 
 int RPN::doOperation(char c) {
   if (int_stack.size() < 2)
-        throw std::logic_error("Error: invalid order in expression");
+    throw std::logic_error("Error: invalid order in expression");
   int number2 = int_stack.top();
   int_stack.pop();
   int number1 = int_stack.top();
   int_stack.pop();
   int result = 42;
+  if (number2 == 0)
+    throw std::logic_error("Error: Division with 0 is not allowed");
   std::cout << "Sub result is: " << number1;
   if (c == '+') {
     result = number1 + number2;
